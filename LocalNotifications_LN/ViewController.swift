@@ -7,19 +7,34 @@
 //
 
 import UIKit
+import UserNotifications
 
 class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+
+    UNUserNotificationCenter.current().requestAuthorization(options: [ .alert , .sound , .badge]) { (bool, error) in
+        
+        }
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    @IBAction func notificationBtnPressed(_ sender: UIButton)
+    {
+        let first = UNMutableNotificationContent()
+        first.title = "First Notification"
+        first.subtitle = "Hello World !!"
+        first.body = "Hey I am here to notify you !!"
+        first.badge = 1
+        
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
+        let request = UNNotificationRequest(identifier: "First to Notify !!", content: first, trigger: trigger)
+        
+        UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
+        
+        
     }
-
-
+    
+    
 }
 
